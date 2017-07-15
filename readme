@@ -1,0 +1,6 @@
+1. install Paperlike Pro software
+#sudo dpkg -i paperlikepro_1.0.5_amd64.deb
+2. run Paperlike Pro
+#sudo PaperlikePro
+3. uninstall Paperlike Pro software
+#sudo dpkg -P paperlikepro
