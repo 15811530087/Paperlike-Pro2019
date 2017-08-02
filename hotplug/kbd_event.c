@@ -13,6 +13,8 @@
 #include <linux/keyboard.h>
 #ifndef SIMULATION
 #include "thread.h"
+#else
+#define DSPRINT printf
 #endif
 
 struct termios old;

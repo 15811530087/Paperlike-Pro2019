@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #ifdef SIMULATION
+#define DSPRINT printf
 int main(int argc, char **argv)
 #else
 #include "thread.h"

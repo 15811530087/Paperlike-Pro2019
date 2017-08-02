@@ -2,7 +2,7 @@ CFLAG=-Iinclude/ -I/usr/include/ $(shell pkg-config --cflags --libs gtk+-2.0)
 LDFLAG=-ldl -lpthread -lX11 -lm -lXrandr
 DEST=obj
 OBJS=$(DEST)/main.o $(DEST)/create_main_window.o $(DEST)/hotplug_monitor.o\
-	$(DEST)/kbd_event.o $(DEST)/mouse_event.o\
+	$(DEST)/kbd_event.o $(DEST)/mouse_event.o $(DEST)/mouse_wheel_click.o\
 	$(DEST)/ddcci.o $(DEST)/amd_adl.o $(DEST)/thread.o\
 	$(DEST)/manage_window_show_hide.o $(DEST)/create_setting_window.o\
 	$(DEST)/create_help_window.o $(DEST)/create_about_window.o
@@ -45,6 +45,9 @@ $(DEST)/kbd_event.o : hotplug/kbd_event.c
 $(DEST)/mouse_event.o : hotplug/mouse_event.c
 	$(CC) -c -o $@ $< $(CFLAG)
 
+$(DEST)/mouse_wheel_click.o : hotplug/mouse_wheel_click.c
+	$(CC) -c -o $@ $< $(CFLAG)
+
 $(DEST)/resolution_change.o : hotplug/resolution_change.c
 	$(CC) -c -o $@ $< $(CFLAG) $(SIMFLAG)
 
@@ -75,6 +78,7 @@ simulation:
 	$(CC) -o $(SIM)/monitor_probe $(SIM)/monitor_check.c DSddc/ddcci.c DSddc/amd_adl.c $(CFLAG) $(LDFLAG) $(SIMFLAG)
 	$(CC) -o $(SIM)/keyboard_event hotplug/kbd_event.c $(SIMFLAG)
 	$(CC) -o $(SIM)/mouse_event hotplug/mouse_event.c $(SIMFLAG) $(LDFLAG)
+	$(CC) -o $(SIM)/mouse_wheel_event hotplug/mouse_wheel_click.c $(SIMFLAG) $(LDFLAG)
 
 .PHONY:clean
 clean:
@@ -87,5 +91,6 @@ clean:
 	-rm -rf $(SIM)/monitor_probe 2>&1 > /dev/null
 	-rm -rf $(SIM)/keyboard_event 2>&1 > /dev/null
 	-rm -rf $(SIM)/mouse_event 2>&1 > /dev/null
+	-rm -rf $(SIM)/mouse_wheel_event 2>&1 > /dev/null
 
 

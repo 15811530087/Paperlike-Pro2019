@@ -12,6 +12,7 @@ pthread_t screen_save_thread_instance;
 pthread_t screen_blur_clear_thread_instance;
 pthread_t kbd_instance;
 pthread_t mouse_instance;
+pthread_t mouse_wheel_instance;
 
 //global value
 unsigned char work_mode = 1, show_mode = 1, ResCommMode = DS_RES_HIGH;
@@ -41,6 +42,7 @@ struct monitor* global_DSmonitor = NULL;
 
 extern void *detect_keyboard_event(void *param);
 extern void *mouse_event(void *param);
+extern void *mouse_wheel_click(void *param);
 extern char ui_changed_flag;
 
 void restoreParameters(void)
@@ -580,6 +582,11 @@ int create_background_thread(void)
 
 	ret = pthread_create(&mouse_instance, NULL,
 			mouse_event, NULL);
+	if (ret)
+		perror("create mouse event failed.\n");
+
+	ret = pthread_create(&mouse_wheel_instance, NULL,
+			mouse_wheel_click, NULL);
 	if (ret)
 		perror("create mouse event failed.\n");
 

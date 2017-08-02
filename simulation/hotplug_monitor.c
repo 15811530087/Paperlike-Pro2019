@@ -12,6 +12,10 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
+#ifdef SIMULATION
+#define DSPRINT printf
+#endif
+
 #define UEVENT_BUFFER_SIZE 2048
 
 unsigned char monitor_hotplug_in = 0;
