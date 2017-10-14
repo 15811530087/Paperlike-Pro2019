@@ -9,7 +9,7 @@
 #define DSPRINT(X,...) {}
 #endif
 
-#define WND_TITLE	"Paperlike Pro"
+#define WND_TITLE	"Paperlike Movie"
 #define WINDOW_VBOX_PADDING	0
 
 #define ERROR_THRESH_COUNT	5
@@ -212,9 +212,9 @@ typedef struct _SignalData
 #define MAIN_UI_EXIT_EN		"Exit"
 #define MAIN_UI_EXIT_CH		"退出"
 #define MAIN_UI_RES_HIGH_CH	"可变分辨率模式"
-#define MAIN_UI_RES_LOW_CH	"固定800x600模式"
+#define MAIN_UI_RES_LOW_CH	"固定1100x825模式"
 #define MAIN_UI_RES_HIGH_EN	"Flexiable RES mode"
-#define MAIN_UI_RES_LOW_EN	"Fix 800x600 mode"
+#define MAIN_UI_RES_LOW_EN	"Fix 1100x825 mode"
 
 #define HELP_UI_UPDATE_CH	"检查更新"
 #define HELP_UI_UPDATE_EN	"Checking updating"
@@ -241,7 +241,7 @@ typedef struct _SignalData
 #define SET_AUTO_REF_INT_EN	"refresh frequency: "
 #define SET_SOFT_HAND_CH	"按键手动软刷新(Alt+C)"
 #define SET_SOFT_HAND_EN	"Hot key soft refresh(Alt+C)"
-#define SET_HARD_HAND_CH	"按键手动硬刷新(Alt+H)"
-#define SET_HARD_HAND_EN	"Hot key hard refresh(Alt+H)"
+#define SET_HARD_HAND_CH	"快捷键刷新(Alt+H)"
+#define SET_HARD_HAND_EN	"Hot key refresh(Alt+H)"
 
 #endif

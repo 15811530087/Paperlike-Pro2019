@@ -23,6 +23,29 @@ GtkWidget *normal_display_label;
 GtkWidget *current_mode_label;
 GtkWidget *constrait_label;
 GtkWidget *auto_refresh_interval_label;
+char setting_ui_changed_flag = 0;
+
+void setting_window_init();
+/*{
+	char buf[5];
+	snprintf(buf, 5, "%d", threshold);
+	gtk_entry_set_text(GTK_ENTRY(edit_threshold), buf);
+	gtk_range_set_value(GTK_RANGE(slider_threshold), threshold);
+}*/
+
+static int paperlike_refresh_setting_ui(GtkWidget *textview)
+{
+	usleep(500*1000);
+
+	if (setting_ui_changed_flag == 0)
+		return 1;
+
+	setting_ui_changed_flag = 0;
+	setting_window_init();
+	return 1;
+}
+
+
 
 void setting_window_text_change()
 {
@@ -440,8 +463,8 @@ GtkWidget *create_setting_window()
 
 	// Soft refresh checkbox
 	checkbox_soft_hand_refresh = gtk_check_button_new_with_label(SET_SOFT_HAND_CH);
-	gtk_box_pack_start(GTK_BOX(vbox), checkbox_soft_hand_refresh, FALSE, TRUE, 0);
-	gtk_widget_show(checkbox_soft_hand_refresh);
+	//gtk_box_pack_start(GTK_BOX(vbox), checkbox_soft_hand_refresh, FALSE, TRUE, 0);
+	//gtk_widget_show(checkbox_soft_hand_refresh);
 	// Hard refresh checkbox
 	checkbox_hard_hand_refresh = gtk_check_button_new_with_label(SET_HARD_HAND_CH);
 	gtk_box_pack_start(GTK_BOX(vbox), checkbox_hard_hand_refresh, FALSE, TRUE, 0);
@@ -495,6 +518,7 @@ GtkWidget *create_setting_window()
 	g_signal_connect(GTK_OBJECT(Cancel_button),"clicked",
 		GTK_SIGNAL_FUNC(Cancel_action),NULL);
 
+	g_idle_add((GSourceFunc)paperlike_refresh_setting_ui, NULL);
 	//g_signal_connect(G_OBJECT(window_setting),"delete_event",G_CALLBACK(delete_event), NULL);
 	//gtk_window_set_modal(GTK_WINDOW(window_setting), TRUE);
 	gtk_container_add(GTK_CONTAINER(window_setting), vbox);

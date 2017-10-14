@@ -1,9 +1,9 @@
-Package: PaperlikePro
-Version: 1.0.5
+Package: PaperlikeMovie
+Version: 1.0.6
 Section: x11
 Priority: standard
 Architecture: amd64
 Depends:
 Installed-Size: 200
 Maintainer: support@dasung.com
-Description: Paperlike Pro Software
+Description: Paperlike Movie Software

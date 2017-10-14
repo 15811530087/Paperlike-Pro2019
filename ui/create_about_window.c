@@ -32,16 +32,16 @@ GtkWidget *create_about_window()
 	gtk_container_set_border_width(GTK_CONTAINER(window_about), 30);
 	gtk_window_set_position(GTK_WINDOW(window_about), GTK_WIN_POS_CENTER);
 
-	vbox = gtk_vbox_new(FALSE, 12);
+	vbox = gtk_vbox_new(FALSE, 15);
 
 	fixed = gtk_fixed_new();
-	label_info = gtk_label_new("Paperlike Pro");
-	gtk_widget_set_size_request(label_info, 90, 30);
+	label_info = gtk_label_new("Paperlike Movie");
+	gtk_widget_set_size_request(label_info, 110, 30);
 	gtk_fixed_put(GTK_FIXED(fixed), label_info, 0, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), fixed, FALSE, FALSE, 0);
 
 	fixed = gtk_fixed_new();
-	label_info = gtk_label_new("     v1.0.5");
+	label_info = gtk_label_new("     v1.0.6");
 	gtk_widget_set_size_request(label_info, 80, 30);
 	gtk_fixed_put(GTK_FIXED(fixed), label_info, 0, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), fixed, TRUE, TRUE,

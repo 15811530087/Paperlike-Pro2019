@@ -44,6 +44,7 @@ extern void *detect_keyboard_event(void *param);
 extern void *mouse_event(void *param);
 extern void *mouse_wheel_click(void *param);
 extern char ui_changed_flag;
+extern char setting_ui_changed_flag;
 
 void restoreParameters(void)
 {
@@ -282,6 +283,8 @@ void *screen_save_thread(void *param)
 
 void *screen_blur_clear_thread(void *param)
 {
+	static int blur_count = 0;
+
 	while (1) {
 		if ((MonitorOnline == false) ||
 			(auto_clear_blur_enable == 0) ||
@@ -294,11 +297,36 @@ void *screen_blur_clear_thread(void *param)
 		clear_blur_count++;
 
 		if (auto_clear_blur_time <= clear_blur_count) {
-			clear_blur_flag = 1;
+			clear_blur_flag = 2;
 			clear_blur_count = 0;
 		}
 	}
 }
+
+unsigned short convert_to_threshold(unsigned short step)
+{
+    unsigned short result = 0;
+    
+    switch (show_mode) {
+        case DS_MODE_A2:
+        case DS_MODE_LOW_A2:
+            //130 - 250, default 190
+            result = 130 + (step - 1) * 15;
+            break;
+        case DS_MODE_FLOYD:
+            //1 - 9, default 5
+            result = 28 + (step - 1) * 28;
+            break;
+        case DS_MODE_LOW_A5:
+            //80 - 200 default 160
+            result = 80 + (step - 1) * 15;
+            break;
+    }
+    
+    DSPRINT("***** after calculate, threshold result is %d .\n", result);
+    return result;
+}
+
 
 unsigned short threshold_calculate(unsigned short temp_threshold)
 {
@@ -409,6 +437,7 @@ void *heart_thread(void *param)
                 		}*/
 				//sleep(5);
 				ui_changed_flag = 1;
+				setting_ui_changed_flag = 1;
 				continue;
 			} else {
 				//sleep 10s
@@ -535,6 +564,7 @@ void *heart_thread(void *param)
 				else
 					show_mode = packet_data;
 				ui_changed_flag = 1;
+				setting_ui_changed_flag = 1;
 			} else if (packet_data == 8) {
 				//screen_save_count = 0;
 				//screen_save_flag = 0;
@@ -546,6 +576,14 @@ void *heart_thread(void *param)
 		case 0x01:
 			if (packet_data == 0x2)
 				DSPRINT("Heart Ok.\n");
+			break;
+		case 0x8:
+		case 0x9:
+		case 0xb:
+			threshold = convert_to_threshold(packet_data);
+			screen_save_count = 0;
+			screen_save_flag = 0;
+			setting_ui_changed_flag = 1;
 			break;
 		}
 		usleep(200*1000);

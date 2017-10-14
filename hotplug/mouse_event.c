@@ -56,6 +56,7 @@ void restore_default_screen_resolution()
 
 void set_default_screen_resolution()
 {
-	system("ResChange 800x600");
+	system("ResChange 1100x825");
+	//system("ResChange 800x600");
 	//system("xrandr --output DP-1-1 --mode 800x600");
 }

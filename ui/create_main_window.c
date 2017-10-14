@@ -363,7 +363,7 @@ static void Exit_action(GtkWidget *wid, GtkWidget *win)
 	dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL,
 		GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO,
 		//GTK_MESSAGE_INFO, GTK_BUTTONS_OK | GTK_BUTTONS_CLOSE,
-		"Are you sure to quit Paperlike Pro app?");
+		"Are you sure to quit Paperlike Movie app?");
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
 		gtk_main_quit();
@@ -413,7 +413,7 @@ GtkWidget *create_main_window()
 
 	/* Create low res radio */
 	group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(radio_high_res));
-	radio_low_res = gtk_radio_button_new_with_label(group, "固定800X600模式");
+	radio_low_res = gtk_radio_button_new_with_label(group, "固定1100X825模式");
 	//gtk_widget_set_size_request(radio_low_res, 80, 20);
 	gtk_box_pack_start(GTK_BOX(vbox), radio_low_res, TRUE, TRUE, 0);
 	gtk_widget_show(radio_low_res);
@@ -480,7 +480,7 @@ GtkWidget *create_main_window()
 		WINDOW_VBOX_PADDING);
 
 	/* Create LABEL */
-	label_info = gtk_label_new("Paperlike Pro v1.0.5");
+	label_info = gtk_label_new("Paperlike Movie v1.0.6");
 	gtk_box_pack_start(GTK_BOX(vbox), label_info, TRUE, TRUE,
 		WINDOW_VBOX_PADDING);
 
