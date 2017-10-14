@@ -363,7 +363,7 @@ static void Exit_action(GtkWidget *wid, GtkWidget *win)
 	dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL,
 		GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO,
 		//GTK_MESSAGE_INFO, GTK_BUTTONS_OK | GTK_BUTTONS_CLOSE,
-		"Are you sure to quit Paperlike Movie app?");
+		"Are you sure to quit PaperMovie app?");
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
 		gtk_main_quit();
@@ -480,7 +480,7 @@ GtkWidget *create_main_window()
 		WINDOW_VBOX_PADDING);
 
 	/* Create LABEL */
-	label_info = gtk_label_new("Paperlike Movie v1.0.6");
+	label_info = gtk_label_new("PaperMovie v1.0.6");
 	gtk_box_pack_start(GTK_BOX(vbox), label_info, TRUE, TRUE,
 		WINDOW_VBOX_PADDING);
 

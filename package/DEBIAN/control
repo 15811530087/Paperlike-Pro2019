@@ -1,4 +1,4 @@
-Package: PaperlikeMovie
+Package: PaperMovie
 Version: 1.0.6
 Section: x11
 Priority: standard
@@ -6,4 +6,4 @@ Architecture: amd64
 Depends:
 Installed-Size: 200
 Maintainer: support@dasung.com
-Description: Paperlike Movie Software
+Description: PaperMovie Software

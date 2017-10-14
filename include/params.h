@@ -9,7 +9,7 @@
 #define DSPRINT(X,...) {}
 #endif
 
-#define WND_TITLE	"Paperlike Movie"
+#define WND_TITLE	"PaperMovie"
 #define WINDOW_VBOX_PADDING	0
 
 #define ERROR_THRESH_COUNT	5

@@ -1,6 +1,6 @@
-1. install Paperlike Movie software
-#sudo dpkg -i paperlikemovie_1.0.5_amd64.deb
-2. run Paperlike Movie
-#sudo PaperlikeMovie
-3. uninstall Paperlike Movie software
-#sudo dpkg -P paperlikemovie
+1. install PaperMovie software
+#sudo dpkg -i papermovie_1.0.5_amd64.deb
+2. run PaperMovie
+#sudo PaperMovie
+3. uninstall PaperMovie software
+#sudo dpkg -P papermovie
