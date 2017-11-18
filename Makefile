@@ -13,15 +13,15 @@ CC=gcc
 SIM=simulation
 SIMFLAG=-DSIMULATION
 
-default:PaperMovie ResChange buildpackage
+default:PaperLikeHD ResChange buildpackage
 
 .PHONY:buildpackage
 buildpackage:
-	cp PaperMovie ResChange DS.ico package/usr/local/sbin/
+	cp PaperLikeHD ResChange DS.ico package/usr/local/sbin/
 	dpkg -b package .
 
-.PHONY:PaperMovie
-PaperMovie:$(OBJS)
+.PHONY:PaperLikeHD
+PaperLikeHD:$(OBJS)
 	gcc -o $@ $(OBJS) $(CFLAG) $(LDFLAG)
 	strip $@
 
@@ -83,7 +83,7 @@ simulation:
 .PHONY:clean
 clean:
 	-rm -rf $(DEST)/*.o 2>&1 > /dev/null
-	-rm -rf PaperMovie 2>&1 > /dev/null
+	-rm -rf PaperLikeHD 2>&1 > /dev/null
 	-rm -rf ResChange 2>&1 > /dev/null
 	-rm -rf paper*.deb 2>&1 > /dev/null
 	-rm -rf package/usr/local/sbin/* 2>&1 > /dev/null

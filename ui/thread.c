@@ -319,7 +319,7 @@ unsigned short convert_to_threshold(unsigned short step)
             break;
         case DS_MODE_LOW_A5:
             //80 - 200 default 160
-            result = 80 + (step - 1) * 15;
+            result = 50 + (step - 1) * 23;
             break;
     }
     
@@ -367,10 +367,10 @@ unsigned short threshold_calculate(unsigned short temp_threshold)
             break;
         case DS_MODE_LOW_A5:
             //80 - 200 default 160
-            if (temp_threshold <= 80)
-                result = 80;
-            else if (temp_threshold >= 200)
-                result = 200;
+            if (temp_threshold <= 50)
+                result = 50;
+            else if (temp_threshold >= 234)
+                result = 234;
             else {
                 result = temp_threshold;
             }
@@ -559,10 +559,14 @@ void *heart_thread(void *param)
 		case 0x07:
 		{
 			if ((packet_data >= 1) && (packet_data <= 6)) {
-				if (ResCommMode == DS_RES_LOW)
-					show_mode = packet_data + 3;
-				else
-					show_mode = packet_data;
+                               if (ResCommMode == DS_RES_LOW)
+                                       show_mode = packet_data + 3;
+                               else
+                                       show_mode = packet_data;
+
+				if (show_mode > 6)
+					show_mode -= 3;
+
 				ui_changed_flag = 1;
 				setting_ui_changed_flag = 1;
 			} else if (packet_data == 8) {

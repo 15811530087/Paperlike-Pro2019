@@ -864,7 +864,8 @@ int ddcci_read_edid(struct monitor* mon, int addr)
 			/* Parse more infos... */
 		}
 
-		if (strncmp(&buf[0x5f], "DASUNI", 6) == 0) {
+		//printf("%s.\n", &buf[0x5f]);
+		if (strncmp(&buf[0x5f], "Paperlike H D", 6) == 0) {
 			DSPRINT("found out DS monitor.\n");
 			mon->DSMonitor = 1;
 		}

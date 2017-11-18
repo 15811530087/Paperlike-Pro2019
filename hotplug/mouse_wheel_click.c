@@ -50,7 +50,14 @@ void *mouse_wheel_click(void *param)
                 }
             }
 	#else
-		screen_save_count = 0;
+            for(int i = 0; i < rd_cnt; i++)
+            {
+                if(i == rd_cnt - 1)
+                {
+                    DSPRINT("mouse wheel clicked.\n");
+	    	    screen_save_count = 0;
+                }
+            }
 	#endif
         }
     }
