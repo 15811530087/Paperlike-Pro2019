@@ -1,5 +1,5 @@
 1. install PaperLikeHD software
-#sudo dpkg -i paperlikehd_1.0.5_amd64.deb
+#sudo dpkg -i paperlikehd_1.0.8_amd64.deb
 2. run PaperLikeHD
 #sudo PaperLikeHD
 3. uninstall PaperLikeHD software

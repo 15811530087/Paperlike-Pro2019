@@ -41,7 +41,7 @@ GtkWidget *create_about_window()
 	gtk_box_pack_start(GTK_BOX(vbox), fixed, FALSE, FALSE, 0);
 
 	fixed = gtk_fixed_new();
-	label_info = gtk_label_new("     v1.0.6");
+	label_info = gtk_label_new("     v1.0.8");
 	gtk_widget_set_size_request(label_info, 80, 30);
 	gtk_fixed_put(GTK_FIXED(fixed), label_info, 0, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), fixed, TRUE, TRUE,

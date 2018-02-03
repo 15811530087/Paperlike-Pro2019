@@ -46,12 +46,13 @@ void main_window_init()
 	case DS_RES_HIGH:
 		gtk_button_set_label(GTK_BUTTON(button_A5), "Floyd");
 		gtk_button_set_label(GTK_BUTTON(button_A16), "A16");
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio_high_res), FALSE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio_low_res), FALSE);
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio_high_res), TRUE);
 		break;
 	case DS_RES_LOW:
 		gtk_button_set_label(GTK_BUTTON(button_A5), "A5");
 		gtk_button_set_label(GTK_BUTTON(button_A16), "A61");
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio_high_res), FALSE);
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio_low_res), TRUE);
 		break;
 	}
@@ -137,7 +138,7 @@ case GDK_m:
     return TRUE;
 }
 
-static void radio_action(GtkWidget *widget, gpointer data)
+static void radio_action1(GtkWidget *widget, gpointer data)
 {
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)) == false)
 		return;
@@ -409,7 +410,7 @@ GtkWidget *create_main_window()
 	gtk_box_pack_start(GTK_BOX(vbox), radio_high_res, TRUE, TRUE, 0);
 	gtk_widget_show(radio_high_res);
 	g_signal_connect(GTK_OBJECT(radio_high_res), "clicked",
-		GTK_SIGNAL_FUNC(radio_action), NULL);
+		GTK_SIGNAL_FUNC(radio_action1), NULL);
 
 	/* Create low res radio */
 	group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(radio_high_res));
@@ -417,8 +418,8 @@ GtkWidget *create_main_window()
 	//gtk_widget_set_size_request(radio_low_res, 80, 20);
 	gtk_box_pack_start(GTK_BOX(vbox), radio_low_res, TRUE, TRUE, 0);
 	gtk_widget_show(radio_low_res);
-	//g_signal_connect(GTK_OBJECT(radio_low_res), "clicked",
-	//	GTK_SIGNAL_FUNC(radio_action), NULL);
+	g_signal_connect(GTK_OBJECT(radio_low_res), "clicked",
+		GTK_SIGNAL_FUNC(radio_action1), NULL);
 
 	/* Create A5 button */
 	button_A5 = gtk_button_new_from_stock(MAIN_UI_A5_EN);
@@ -480,15 +481,15 @@ GtkWidget *create_main_window()
 		WINDOW_VBOX_PADDING);
 
 	/* Create LABEL */
-	label_info = gtk_label_new("PaperLikeHD v1.0.6");
+	label_info = gtk_label_new("PaperLikeHD v1.0.8");
 	gtk_box_pack_start(GTK_BOX(vbox), label_info, TRUE, TRUE,
 		WINDOW_VBOX_PADDING);
 
 	main_window_text_change();
 	//main_window_init();
 
-	g_signal_connect(GTK_OBJECT(radio_low_res), "clicked",
-		GTK_SIGNAL_FUNC(radio_action), NULL);
+	//g_signal_connect(GTK_OBJECT(radio_low_res), "clicked",
+	//	GTK_SIGNAL_FUNC(radio_action1), NULL);
 
 	g_idle_add((GSourceFunc)paperlike_refresh_ui, NULL);
 	//g_signal_connect((gtk_widget_get_root_window(window)), "key-press-event",

@@ -1493,6 +1493,27 @@ bool SendMonitorLowA5Threshold(struct monitor* mon, unsigned short Threshold)
     return DSMonitorReadData(mon, NULL, 0, replay_data, replay_size);
 }
 
+bool SendMonitorAdvancedSpeed(struct monitor* mon, unsigned char SpeedLevel)
+{
+    SignalData SD;
+    unsigned char replay_data[128];
+    unsigned char replay_size = 11;
+
+    memset((void *)&SD, 0, sizeof(SignalData));
+    SD.SignalDataTypeHead.uSignalDataType = DS_PACKET_TYPE_ADVANCED_SPEED;
+    SD.SignalDataType.value = SpeedLevel;
+
+    if (mon == 0)
+        return false;
+
+    DSMonitorWriteData(mon, (void *)&SD, sizeof(SignalData), false);
+
+    usleep(500*1000);
+
+    return DSMonitorReadData(mon, NULL, 0, replay_data, replay_size);
+}
+
+
 bool send_clear_monitor(struct monitor* mon, unsigned short soft_hard)
 {
     SignalData SD;

@@ -37,11 +37,13 @@ typedef struct _SignalData
 #define DS_PACKET_TYPE_THRESHOLD_A2         9
 #define DS_PACKET_TYPE_THRESHOLD_LOW_A2     10
 #define DS_PACKET_TYPE_THRESHOLD_LOW_A5     11
+#define DS_PACKET_TYPE_ADVANCED_SPEED       12
         unsigned char Reserved : 4;
     }SignalDataTypeHead;
     
     union _SignalDataType
     {
+	unsigned char value;
         // 1.心跳信号（发送频率降低-1min） -> DS_PACKET_TYPE_BEAT
         struct _Beat
         {
@@ -237,11 +239,15 @@ typedef struct _SignalData
 #define SET_SELFDEF_EN		"user def"
 #define SET_AUTO_REFRESH_CH	"定时自动刷新"
 #define SET_AUTO_REFRESH_EN	"Auto refresh"
-#define SET_AUTO_REF_INT_CH	"自动刷新间隔: "
-#define SET_AUTO_REF_INT_EN	"refresh frequency: "
+#define SET_AUTO_REF_INT_CH	"  自动刷新间隔: "
+#define SET_AUTO_REF_INT_EN	"  Refresh frequency: "
 #define SET_SOFT_HAND_CH	"按键手动软刷新(Alt+C)"
 #define SET_SOFT_HAND_EN	"Hot key soft refresh(Alt+C)"
 #define SET_HARD_HAND_CH	"快捷键刷新(Alt+H)"
 #define SET_HARD_HAND_EN	"Hot key refresh(Alt+H)"
+#define SET_ADV_S_L_EN		"Advanced Speed Setting:"
+#define SET_ADV_S_L_CH		"高级加速设置:"
+#define SET_ADV_S_N_EN		"Note: The setting of the electronic ink suspension parameters of Paperlike HD, for speediness or darkness adjusting"
+#define SET_ADV_S_N_CH		"注: Paperlike HD可进行电子墨滴悬浮参数设置,在一定程度上加速或加黑"
 
 #endif

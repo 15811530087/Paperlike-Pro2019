@@ -19,6 +19,7 @@ void *mouse_wheel_click(void *param)
     int mouse_fd = open("/dev/input/mice", O_RDONLY | O_NONBLOCK);
     signed char input[4];
     ssize_t rd_cnt;
+    fd_set readfds;
 
     if(mouse_fd < 0)
     {
@@ -29,6 +30,10 @@ void *mouse_wheel_click(void *param)
     while(1)
     {
         errno = 0;
+        FD_ZERO(&readfds);
+        FD_SET(mouse_fd, &readfds);
+        select(mouse_fd + 1, &readfds, NULL, NULL, NULL);
+        if (FD_ISSET(mouse_fd, &readfds)) {
         rd_cnt = read(mouse_fd, input, 4);
         if(rd_cnt <= 0 && errno != EAGAIN)
         {
@@ -54,11 +59,12 @@ void *mouse_wheel_click(void *param)
             {
                 if(i == rd_cnt - 1)
                 {
-                    DSPRINT("mouse wheel clicked.\n");
+                    //DSPRINT("mouse wheel clicked.\n");
 	    	    screen_save_count = 0;
                 }
             }
 	#endif
+        }
         }
     }
 

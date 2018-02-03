@@ -32,6 +32,8 @@ volatile bool MonitorOnline = false;
 unsigned char clear_blur_flag = 0;
 unsigned char screen_save_flag = 0;
 unsigned char set_threshold_flag = 0;
+unsigned char set_advanced_speed_flag = 0;
+unsigned char advanced_speed_level = 0;
 unsigned char resolution_change_flag = 0;
 unsigned short set_threshold_value = 150;
 unsigned char error_count = 0;
@@ -54,7 +56,7 @@ void restoreParameters(void)
     FILE *file;
 
     snprintf(UserDataFile, 48, "%s/.PaperLike", getenv("HOME"));
-    DSPRINT("local user private data file is %s.\n", UserDataFile);
+    DSPRINT("restore local user private data file is %s.\n", UserDataFile);
 
     file = fopen(UserDataFile, "r");
     if (file == NULL)
@@ -169,7 +171,7 @@ void saveParameters(void)
     char data[128];
     FILE *file;
     snprintf(UserDataFile, 48, "%s/.PaperLike", getenv("HOME"));
-    DSPRINT("local user private data file is %s.\n", UserDataFile);
+    DSPRINT("save local user private data file is %s.\n", UserDataFile);
     
     file = fopen(UserDataFile, "w");
     if (file == NULL)
@@ -540,6 +542,14 @@ void *heart_thread(void *param)
 			usleep(300*1000);
 		}
 
+		if (set_advanced_speed_flag) {
+			printf("setting..., %d.\n", advanced_speed_level);
+			set_advanced_speed_flag = 0;
+			usleep(100*1000);
+			SendMonitorAdvancedSpeed(global_DSmonitor, advanced_speed_level);
+			usleep(300*1000);
+		}
+
 		if (send_heart_signal(global_DSmonitor, true) == false)
 			error_count++;
 
@@ -558,7 +568,7 @@ void *heart_thread(void *param)
 		switch (packet_type) {
 		case 0x07:
 		{
-			if ((packet_data >= 1) && (packet_data <= 6)) {
+			if ((packet_data >= 1) && (packet_data <= 3)) {
                                if (ResCommMode == DS_RES_LOW)
                                        show_mode = packet_data + 3;
                                else
@@ -575,8 +585,8 @@ void *heart_thread(void *param)
 			}
 			screen_save_count = 0;
 			screen_save_flag = 0;
-			break;
 		}
+			break;
 		case 0x01:
 			if (packet_data == 0x2)
 				DSPRINT("Heart Ok.\n");

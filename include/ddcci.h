@@ -146,6 +146,8 @@ bool SendMonitorLowA2Threshold(struct monitor* mon, unsigned short Threshold);
 
 bool SendMonitorLowA5Threshold(struct monitor* mon, unsigned short Threshold);
 
+bool SendMonitorAdvancedSpeed(struct monitor* mon, unsigned char SpeedLevel);
+
 /* Macros */
 #define DDCCI_DB_RETURN_IF_RUN(cond, value, message, node, run) \
 	if (cond) { \

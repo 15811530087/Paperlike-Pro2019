@@ -22,6 +22,8 @@ extern unsigned char clear_blur_flag;
 extern unsigned char screen_save_flag;
 extern unsigned char set_threshold_flag;
 extern unsigned short set_threshold_value;
+extern unsigned char set_advanced_speed_flag;
+extern unsigned char advanced_speed_level;
 extern unsigned char error_count;
 extern unsigned char pause_flag;
 extern unsigned char set_mode_flag;

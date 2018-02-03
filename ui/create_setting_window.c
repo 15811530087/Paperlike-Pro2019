@@ -23,6 +23,9 @@ GtkWidget *normal_display_label;
 GtkWidget *current_mode_label;
 GtkWidget *constrait_label;
 GtkWidget *auto_refresh_interval_label;
+GtkWidget *AdvancedSpeedLabel;
+GtkWidget *AdvancedSpeedNote;
+GtkWidget *AdvancedSpeedCombox;
 char setting_ui_changed_flag = 0;
 
 void setting_window_init();
@@ -49,6 +52,8 @@ static int paperlike_refresh_setting_ui(GtkWidget *textview)
 
 void setting_window_text_change()
 {
+	gint pos = gtk_combo_box_get_active(GTK_COMBO_BOX(AdvancedSpeedCombox));
+
 	if (language == LANG_ZH) {
 		gtk_label_set_text(GTK_LABEL(normal_display_label), SET_NOR_DISP_CH);
 		gtk_label_set_text(GTK_LABEL(current_mode_label), SET_CUR_MODE_CH);
@@ -58,9 +63,22 @@ void setting_window_text_change()
 		gtk_button_set_label(GTK_BUTTON(radio_deep), SET_DARK_CH);
 		gtk_button_set_label(GTK_BUTTON(radio_selfdef), SET_SELFDEF_CH);
 		gtk_button_set_label(GTK_BUTTON(checkbox_auto_refresh), SET_AUTO_REFRESH_CH);
-		gtk_label_set_text(GTK_LABEL(auto_refresh_interval_label), SET_AUTO_REFRESH_CH);
+		gtk_label_set_text(GTK_LABEL(auto_refresh_interval_label), SET_AUTO_REF_INT_CH);
 		gtk_button_set_label(GTK_BUTTON(checkbox_soft_hand_refresh), SET_SOFT_HAND_CH);
 		gtk_button_set_label(GTK_BUTTON(checkbox_hard_hand_refresh), SET_HARD_HAND_CH);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0, "快++");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),1, "快+");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),2, "默认");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),3, "黑+");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),4, "黑++");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),5, "黑+++");
+
 	} else {
 		gtk_label_set_text(GTK_LABEL(normal_display_label), SET_NOR_DISP_EN);
 		gtk_label_set_text(GTK_LABEL(current_mode_label), SET_CUR_MODE_EN);
@@ -70,10 +88,24 @@ void setting_window_text_change()
 		gtk_button_set_label(GTK_BUTTON(radio_deep), SET_DARK_EN);
 		gtk_button_set_label(GTK_BUTTON(radio_selfdef), SET_SELFDEF_EN);
 		gtk_button_set_label(GTK_BUTTON(checkbox_auto_refresh), SET_AUTO_REFRESH_EN);
-		gtk_label_set_text(GTK_LABEL(auto_refresh_interval_label), SET_AUTO_REFRESH_EN);
+		gtk_label_set_text(GTK_LABEL(auto_refresh_interval_label), SET_AUTO_REF_INT_EN);
 		gtk_button_set_label(GTK_BUTTON(checkbox_soft_hand_refresh), SET_SOFT_HAND_EN);
 		gtk_button_set_label(GTK_BUTTON(checkbox_hard_hand_refresh), SET_HARD_HAND_EN);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0, "Speed++");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),1, "Speed+");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),2, "Default");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),3, "Dark+");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),4, "Dark++");
+		gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),5, "Dark+++");
 	}
+
+	gtk_combo_box_set_active(GTK_COMBO_BOX(AdvancedSpeedCombox), pos);
 }
 
 static void radio_action(GtkWidget *widget, gpointer data)
@@ -265,6 +297,47 @@ void setting_window_init(void)
 #endif
 }
 
+static unsigned char pos2level(unsigned char pos)
+{
+	unsigned char level = 50;
+
+	switch (pos) {
+	case 0:
+		level = 10;
+		break;
+	case 1:
+		level = 30;
+		break;
+	default:
+	case 2:
+		level = 50;
+		break;
+	case 3:
+		level = 90;
+		break;
+	case 4:
+		level = 128;
+		break;
+	case 5:
+		level = 218;
+		break;
+	}
+
+	return level;
+}
+
+static void AdvancedSpeedComboxAction(GtkWidget *widget, gpointer data)
+{
+	gint pos = gtk_combo_box_get_active(GTK_COMBO_BOX(AdvancedSpeedCombox));
+	DSPRINT("%s, active position is %d. \n", __func__, pos);
+
+	if (pos < 0)
+		return;
+
+	set_advanced_speed_flag = 1;
+	advanced_speed_level = pos2level(pos);
+}
+
 static void OK_action(GtkWidget *widget, gpointer data)
 {
 	DSPRINT("%s.\n", __func__);
@@ -433,6 +506,51 @@ GtkWidget *create_setting_window()
 	gtk_box_pack_start(GTK_BOX (vbox), separator, FALSE, TRUE, 0);
 	gtk_widget_show(separator);
 
+	// Add Advanced Speed Label
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	label = gtk_label_new(SET_ADV_S_L_CH);
+	AdvancedSpeedLabel = label;
+	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+	gtk_label_set_justify(GTK_LABEL(label),GTK_JUSTIFY_LEFT);
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	gtk_widget_show(label);
+	gtk_widget_show(hbox);
+
+	//Add Advanced Speed Combo BOX
+	AdvancedSpeedCombox = gtk_combo_box_new_text();
+	gtk_box_pack_start(GTK_BOX(hbox), AdvancedSpeedCombox, FALSE, FALSE, 0);
+	gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+	gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+	gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+	gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+	gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+	gtk_combo_box_remove_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0);
+	gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),0, "快++");
+	gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),1, "快+");
+	gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),2, "默认");
+	gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),3, "黑+");
+	gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),4, "黑++");
+	gtk_combo_box_insert_text(GTK_COMBO_BOX(AdvancedSpeedCombox),5, "黑++");
+	gtk_combo_box_set_active(GTK_COMBO_BOX(AdvancedSpeedCombox), 2);
+
+	// Add Advanced Speed Note
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	label = gtk_label_new(SET_ADV_S_N_CH);
+	AdvancedSpeedNote = label;
+	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+	gtk_label_set_justify(GTK_LABEL(label),GTK_JUSTIFY_LEFT);
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	gtk_widget_show(label);
+	gtk_widget_show(hbox);
+
+
+	/* Add seperator */
+	separator = gtk_hseparator_new();
+	gtk_box_pack_start(GTK_BOX (vbox), separator, FALSE, TRUE, 0);
+	gtk_widget_show(separator);
+
 	/* Add checkbox control */
 	hbox = gtk_hbox_new(FALSE, 0);
 	// Auto soft refresh checkbox
@@ -513,6 +631,9 @@ GtkWidget *create_setting_window()
 	g_signal_connect(GTK_OBJECT(checkbox_auto_refresh),"clicked",
 		GTK_SIGNAL_FUNC(checkbox_auto_refresh_action),NULL);
 
+	g_signal_connect(GTK_OBJECT(AdvancedSpeedCombox), "changed",
+		GTK_SIGNAL_FUNC(AdvancedSpeedComboxAction), NULL);
+
 	g_signal_connect(GTK_OBJECT(OK_button),"clicked",
 		GTK_SIGNAL_FUNC(OK_action),NULL);
 	g_signal_connect(GTK_OBJECT(Cancel_button),"clicked",
@@ -527,6 +648,8 @@ GtkWidget *create_setting_window()
 
 	setting_window_text_change();
 
+	//g_signal_connect(GTK_OBJECT(AdvancedSpeedCombox), "changed",
+	//	GTK_SIGNAL_FUNC(AdvancedSpeedComboxAction), NULL);
 	return window_setting;
 }
 
